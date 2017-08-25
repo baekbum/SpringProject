@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="mvcBoardList" class="kr.koreait.VO.MvcBoardList"/>
+	
+	<bean id="insert" class="kr.koreait.Service.InsertService"/>
+	
+	<bean id="dao" class="kr.koreait.DAO.MvcBoardDAO"/>
+	
+	<bean id="selectList" class="kr.koreait.Service.SelectListService"/>
+	
+	<bean id="increment" class="kr.koreait.Service.IncrementService"/>
+	
+	<bean id="contentView" class="kr.koreait.Service.contentViewService"/>
+	
+	<bean id="vo" class="kr.koreait.VO.MvcBoardVO"/>
+
+</beans>
