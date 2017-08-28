@@ -16,5 +16,11 @@
 	<bean id="contentView" class="kr.koreait.Service.contentViewService"/>
 	
 	<bean id="vo" class="kr.koreait.VO.MvcBoardVO"/>
+	
+	<bean id="update" class="kr.koreait.Service.UpdateService"/>
+	
+	<bean id="delete" class="kr.koreait.Service.DeleteService"/>
+	
+	<bean id="reply" class="kr.koreait.Service.ReplyService"/>
 
 </beans>

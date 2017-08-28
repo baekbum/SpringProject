@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<td>제목</td>
-		<td><input type="text" name="subejct"/></td>
+		<td><input type="text" name="subject"/></td>
 	</tr>
 	<tr>
 		<td>내용</td>
@@ -24,7 +24,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="center">
-		<input type="submit" name="submit" value="전송하기"/>
+		<input type="submit" name="submit" value="저장하기"/>
 		<input type="reset" name="reset" value="다시쓰기"/>
 		<input type="button" name="view" value="목록보기" onclick="location.href='list'"/>
 		</td>

@@ -24,6 +24,10 @@ public class InsertService implements MvcBoardService {
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");
 		
+		System.out.println(name);
+		System.out.println(subject);
+		System.out.println(content);
+		
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");		
 		MvcBoardDAO dao = ctx.getBean("dao", MvcBoardDAO.class);
 		

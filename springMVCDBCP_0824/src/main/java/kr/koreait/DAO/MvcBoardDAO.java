@@ -2,6 +2,7 @@ package kr.koreait.DAO;
 
 import java.sql.Connection;
 import java.util.Date;
+import java.util.HashMap;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,33 +32,23 @@ public class MvcBoardDAO {
 	
 //	InsertService 클래스에서 테이블에 저장할 이름, 제목, 내용을 넘겨받고 insert SQL 명령을 실행하는 메소드
 	public void insert(String name, String subject, String content) {
+		System.out.println("MvcBoardDAO insert()");
 		Connection conn = null;
-		PreparedStatement pstmt = null;		
+		PreparedStatement pstmt = null;
 		try {
 			conn = dataSource.getConnection();
-			String sql = "insert into MVCBOARD(idx, name, subject, content, ref, lev, seq) values(mvcboard_idx_seq.nextval, ?, ?, ?,  mvcboard_idx_seq.currval, 0, 0)";
+			String sql = "insert into mvcboard (idx, name, subject, content, ref, lev, seq) " +
+					"values (mvcboard_idx_seq.nextval, ?, ?, ?, mvcboard_idx_seq.currval, 0, 0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			pstmt.setString(2, subject);
 			pstmt.setString(3, content);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
 		} finally {
-			if(conn != null) {
-				try {
-					conn.close();					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}				
-			}
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}				
-			}	
+			if(conn != null) { try { conn.close(); } catch (SQLException e) { e.printStackTrace(); } }
+			if(pstmt != null) { try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } }
 		}
 	}
 	
@@ -215,4 +206,134 @@ public class MvcBoardDAO {
 		return vo;
 		
 	}
+	
+	public void update(int idx, String subject, String content) {
+		System.out.println("update()");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "update mvcboard set subject = ?, content = ?, where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, subject);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, idx);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
+	}
+	
+	public void delete(int idx) {
+		System.out.println("delete()");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "delete from mvcboard where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
+	}
+	
+	public void replyIncrement(HashMap<String, Integer> hmap) {
+		System.out.println("replyIncrement()");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "update mvcboard set seq = seq + 1 where ref = ? and seq >= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, hmap.get("ref"));
+			pstmt.setInt(2, hmap.get("seq"));
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}		
+	}
+	
+//	ReplyService 클래스에서 테이블에 저장할 답글이 저장된 객체를 넘겨받고 답글을 저장하는 insert SQL 명령을 실행하는 메소드
+	public void replyInsert(MvcBoardVO vo) {
+		System.out.println("replyInsert()");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "insert into MVCBOARD(idx, name, subject, content, ref, lev, seq) values(mvcboard_idx_seq.nextval, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getSubject());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setInt(4, vo.getRef());
+			pstmt.setInt(5, vo.getLev());
+			pstmt.setInt(6, vo.getSeq());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
+	}
+	
 }

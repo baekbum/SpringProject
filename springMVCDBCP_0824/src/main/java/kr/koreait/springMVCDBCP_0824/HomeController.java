@@ -15,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.koreait.Service.DeleteService;
 import kr.koreait.Service.IncrementService;
 import kr.koreait.Service.InsertService;
 import kr.koreait.Service.MvcBoardService;
+import kr.koreait.Service.ReplyService;
 import kr.koreait.Service.contentViewService;
 import kr.koreait.Service.SelectListService;
+import kr.koreait.Service.UpdateService;
 
 /**
  * Handles requests for the application home page.
@@ -59,12 +62,11 @@ public class HomeController {
 	public String insertOK(HttpServletRequest request, Model model) {
 //		입력 폼에서 넘어온 내용을 받아서 model 객체에 저정한다.
 		model.addAttribute("request", request);
-//		입력 폼에서 넘어온 내용을 저장한 model 객체로 Service 클래스의 글을 저장하는 메소드를 실행한다.
-		
+//		입력 폼에서 넘어온 내용을 저장한 model 객체로 Service 클래스의 글을 저장하는 메소드를 실행한다.		
 		service = ctx.getBean("insert", InsertService.class);		
 		service.execute(model);
 		
-		return "insert";
+		return "redirect:list";
 	}
 	
 //	테이블에 저장된 글 전체를 얻어오는 메소드
@@ -90,10 +92,51 @@ public class HomeController {
 //	게시글 한 건을 얻어오는 메소드
 	@RequestMapping("/contentView")
 	public String contextView(HttpServletRequest request, Model model) {
+		System.out.println(request + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		model.addAttribute("request", request);
 		service = ctx.getBean("contentView", contentViewService.class);
 		service.execute(model);
 		return "contentView";
+	}
+	
+//	게시글 한 건을 수정하는 메소드
+	@RequestMapping("/update")
+	public String update(HttpServletRequest request, Model model) {
+		System.out.println("update()");
+		model.addAttribute("request", request);
+		service = ctx.getBean("update", UpdateService.class);
+		service.execute(model);
+		return "redirect:list";
+	}
+	
+//	게시글 한 건을 삭제하는 메소드
+	@RequestMapping("/delete")
+	public String delete(HttpServletRequest request, Model model) {
+		System.out.println("delete()");
+		model.addAttribute("request", request);
+		service = ctx.getBean("delete", DeleteService.class);
+		service.execute(model);
+		return "redirect:list";
+	}
+	
+//	답글을 하나를 얻어오는 메소드
+	@RequestMapping("/reply")
+	public String reply(HttpServletRequest request, Model model) {
+		System.out.println("reply()");
+		model.addAttribute("request", request);
+		service = ctx.getBean("contentView", contentViewService.class);
+		service.execute(model);
+		return "reply";
+	}
+	
+//	답글을 저장하는 메소드
+	@RequestMapping("/replyOK")
+	public String replyOK(HttpServletRequest request, Model model) {
+		System.out.println("replyOK()");
+		model.addAttribute("request", request);
+		service = ctx.getBean("reply", ReplyService.class);
+		service.execute(model);
+		return "redirect:list";
 	}
 }
 
