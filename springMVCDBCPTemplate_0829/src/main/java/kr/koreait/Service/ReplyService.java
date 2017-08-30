@@ -43,7 +43,7 @@ public class ReplyService implements MvcBoardService {
 		
 //		글이 출력되는 순서를 조정하기 위해 조건에 만족하는 seq과 req 1씩 증가시키는 메소드를 실행한다.
 		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
-		hmap.put("lev", vo.getLev());
+		hmap.put("seq", vo.getSeq());
 		hmap.put("ref", vo.getRef());
 		
 		dao.replyIncrement(hmap);
