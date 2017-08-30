@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace에는 반드시 DAO 인터페이스의 이름을 풀 패키지 이름과 같이 적어야 한다. -->
+<mapper namespace="kr.koreait.DAO.MybatisDAO">
+
+<insert id="insert" parameterType="kr.koreait.VO.MvcBoardVO">
+	insert into mvcboard (idx, name, subject, content, ref, lev, seq) 
+	values (mvcboard_idx_seq.nextval, #{name}, #{subject}, #{content}, mvcboard_idx_seq.currval, 0, 0)
+</insert>
+
+<select id="selectList" resultType="kr.koreait.VO.MvcBoardVO">
+	select * from mvcboard order by ref desc, seq asc
+</select>
+
+<update id="increment" parameterType="int">
+	update mvcboard set hit = hit + 1 where idx = #{idx}
+</update>
+
+<select id="contentView" parameterType="int" resultType="kr.koreait.VO.MvcBoardVO">
+	select * from mvcboard where idx = #{idx}
+</select>
+
+<update id="update" parameterType="kr.koreait.VO.MvcBoardVO">
+	update mvcboard set subject = #{subject}, content = #{content} where idx = #{idx}
+</update>
+
+<delete id="delete" parameterType="int">
+	delete from mvcboard where idx = #{idx}
+</delete>
+
+<update id="replyIncrement" parameterType="java.util.HashMap">
+	update mvcboard set seq = seq + 1 where ref = #{ref} and seq >= #{seq}
+</update>
+
+<insert id="replyInsert" parameterType="kr.koreait.VO.MvcBoardVO">
+	insert into mvcboard (idx, name, subject, content, ref, lev, seq) 
+	values (mvcboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{ref}, #{lev}, #{seq})
+</insert>
+
+</mapper>
+
+
+
+
+
+
