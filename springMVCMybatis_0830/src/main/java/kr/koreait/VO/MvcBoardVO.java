@@ -27,16 +27,6 @@ public class MvcBoardVO {
 		this.content = content;		
 	}
 	
-	public MvcBoardVO(int idx, String name, String subject, String content, int ref, int lev, int seq) {
-		this.idx = idx;
-		this.name = name;
-		this.subject = subject;
-		this.content = content;
-		this.ref = ref;
-		this.lev = lev;
-		this.seq = seq;
-	}
-	
 	public MvcBoardVO(int idx, String name, String subject, String content, int ref, int lev, int seq, int hit, Date writeDate) {
 		this.idx = idx;
 		this.name = name;
