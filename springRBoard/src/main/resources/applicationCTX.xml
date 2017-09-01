@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="RBoardList" class="kr.koreait.VO.RBoardList"/>
+	
+	<bean id="RBoardVO" class="kr.koreait.VO.RBoardVO"/>
+	
+	<bean id="RBoardCommentList" class="kr.koreait.VO.RBoardCommentList"/>
+	
+	<bean id="RBoardCommentVO" class="kr.koreait.VO.RBoardCommentVO"/>		
+
+</beans>
